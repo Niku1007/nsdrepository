@@ -1,0 +1,31 @@
+steps:
+  # Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'build', '-t', 
+           'asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest', 
+           '.']
+
+  # Docker Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'push', 
+           'asia-south1-docker.pkg.dev/core-result-391211/nikunj/myimage
+           ']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - "run"
+      - "deploy"
+      - "flask-server"
+      - "--image"
+      - "asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest"
+      - "--region"
+      - "asia-south1"
+      "-platform"
+      -"managed"
+      -"--allow-unauthenticated"
+      - "--port"
+      - "5000"
+      options:
+  logging: CLOUD_LOGGING_ONLY
