@@ -1,31 +1,36 @@
 steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-        'build', '-t', 
-           'asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest', 
-           '.']
+  # Build the Docker image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest",
+        ".",
+      ]
 
-  # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-        'push', 
-           'asia-south1-docker.pkg.dev/core-result-391211/nikunj/myimage
-           ']
+  # Push the Docker image to Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest",
+      ]
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  # Deploy the image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
     args:
       - "run"
       - "deploy"
-      - "flask-server"
+      - "nsd-server"
       - "--image"
-      - "asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest"
+      - "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest"
       - "--region"
-      - "asia-south1"
-      "-platform"
-      -"managed"
-      -"--allow-unauthenticated"
+      - "us-central1"
+      - "--platform"
+      - "managed"
+      - "--allow-unauthenticated"
       - "--port"
       - "5000"
-      options:
+options:
   logging: CLOUD_LOGGING_ONLY
