@@ -5,7 +5,7 @@ steps:
       [
         "build",
         "-t",
-        "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest",
+        "asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest",
         ".",
       ]
 
@@ -14,7 +14,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest",
+        "asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest",
       ]
 
   # Deploy the image to Cloud Run
@@ -24,7 +24,7 @@ steps:
       - "deploy"
       - "nsd-server"
       - "--image"
-      - "us-central1-docker.pkg.dev/stunning-saga-386406/test-repo/flask-server:latest"
+      - "asia-south1-docker.pkg.dev/core-result-391211/nikunj/flask-server:latest"
       - "--region"
       - "us-central1"
       - "--platform"
